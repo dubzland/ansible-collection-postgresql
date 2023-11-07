@@ -1,0 +1,29 @@
+---
+postgresql_server_version: 16
+
+postgresql_server_include_default_hba_entries: true
+
+postgresql_server_hba_entries: []
+
+postgresql_server_port: 5432
+postgresql_server_max_connections: 100
+postgresql_server_unix_socket_directories:
+  - /var/run/postgresql
+postgresql_server_ssl: true
+postgresql_server_ssl_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+postgresql_server_ssl_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
+postgresql_server_shared_buffers: '128MB'
+postgresql_server_dynamic_shared_memory_type: posix
+postgresql_server_max_wal_size: 1GB
+postgresql_server_min_wal_size: 80MB
+postgresql_server_log_line_prefix: '%m [%p] %q%u@%d '
+postgresql_server_log_timezone: 'Etc/UTC'
+postgresql_server_cluster_name: 'main'
+postgresql_server_datestyle: 'iso, mdy'
+postgresql_server_timezone: 'Etc/UTC'
+postgresql_server_lc_messages: 'C.UTF-8'
+postgresql_server_lc_monetary: 'C.UTF-8'
+postgresql_server_lc_numeric: 'C.UTF-8'
+postgresql_server_lc_time: 'C.UTF-8'
+postgresql_server_default_text_search_config: 'pg_catalog.english'
+postgresql_server_include_dir: 'conf.d'

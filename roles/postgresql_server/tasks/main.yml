@@ -1,0 +1,31 @@
+---
+- name: Ensure PostgreSQL is installed
+  ansible.builtin.package:
+    name: postgresql
+    state: present
+  register: postgresql_server_package_result
+
+- name: Backup the original PostgreSQL configuration files  # noqa:  no-handler
+  ansible.builtin.copy:
+    src: "{{ postgresql_server_configuration_dir }}/{{ item }}"
+    dest: "{{ postgresql_server_configuration_dir }}/{{ item }}.orig"
+    owner: root
+    group: root
+    mode: '0640'
+    remote_src: true
+  loop:
+    - postgresql.conf
+    - pg_hba.conf
+  when: postgresql_server_package_result is changed
+
+- name: Ensure PostgreSQL is configured
+  ansible.builtin.template:
+    src: "etc/postgresql/{{ postgresql_server_version }}/{{ item }}.j2"
+    dest: "{{ postgresql_server_configuration_dir }}/{{ item }}"
+    owner: postgres
+    group: postgres
+    mode: '0644'
+  loop:
+    - postgresql.conf
+    - pg_hba.conf
+  notify: Restart PostgreSQL

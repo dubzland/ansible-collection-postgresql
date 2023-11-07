@@ -1,0 +1,22 @@
+{{ ansible_managed | comment }}
+{##############################################################################
+ #
+ # MACRO :: print_hba_entry()
+ #
+ #############################################################################}
+{% macro print_hba_entry(entry) %}
+{{ "%-7s %-15s %-15s %-23s %s %s" | format(entry.type, entry.database, entry.user, entry.address | default(''), entry.auth_method, entry.auth_options | default ('')) }}
+{% endmacro %}
+
+# PostgreSQL Client Authentication Configuration File
+# ===================================================
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+{% if postgresql_server_include_default_hba_entries %}
+{%   for client in postgresql_server_default_hba_entries %}
+{{ print_hba_entry(client) }}
+{%   endfor %}
+{% endif %}
+{% for client in postgresql_server_hba_entries %}
+{{ print_hba_entry(client) }}
+{% endfor %}

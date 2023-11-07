@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Test PostgreSQL server role
+      ansible.builtin.include_role:
+        name: dubzland.postgresql.postgresql_server

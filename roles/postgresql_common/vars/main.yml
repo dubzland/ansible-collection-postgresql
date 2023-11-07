@@ -1,0 +1,10 @@
+---
+postgresql_common_prerequisites:
+  - gnupg
+postgresql_common_repo_key_url:
+  https://www.postgresql.org/media/keys/ACCC4CF8.asc
+postgresql_common_repo_key_dest: /usr/share/keyrings/pgdg.asc
+postgresql_common_repo_url: https://apt.postgresql.org/pub/repos/apt
+postgresql_common_repo: "deb\
+  {{ postgresql_common_repo_url }}\
+  {{ ansible_distribution_release }}-pgdg main"

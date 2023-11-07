@@ -1,0 +1,28 @@
+---
+- name: Ensure PostgreSQL prerequisites are installed
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ postgresql_common_prerequisites }}"
+
+- name: Ensure the PostgreSQL repository key is present
+  ansible.builtin.get_url:
+    url: "{{ postgresql_common_repo_key_url }}"
+    dest: "{{ postgresql_common_repo_key_dest }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Ensure the PostgreSQL repository is available
+  ansible.builtin.template:
+    src: etc/apt/sources.list.d/pgdg.list.j2
+    dest: /etc/apt/sources.list.d/pgdg.list
+    owner: root
+    group: root
+    mode: '0644'
+  register: postgresql_repo
+
+- name: Update the package cache  # noqa: no-handler
+  ansible.builtin.apt:
+    update_cache: true
+  when: postgresql_repo.changed
