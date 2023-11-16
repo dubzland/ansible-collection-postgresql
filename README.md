@@ -22,6 +22,9 @@ Also tested against the current development version of `ansible-core`.
 ## Included content
 
 ### Roles
+
+Name | Description
+--- | ---
 [dubzland.postgresql.postgresql_common](https://git.dubzland.net/dubzland/ansible-collection-postgresql/-/tree/main/roles/postgresql_common)|Common tasks required for both client and server
 [dubzland.postgresql.postgresql_server](https://git.dubzland.net/dubzland/ansible-collection-postgresql/-/tree/main/roles/postgresql_server)|Installs and configures the PostgreSQL server
 
