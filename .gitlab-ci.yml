@@ -8,8 +8,9 @@ variables:
   GIT_CLONE_PATH: $ANSIBLE_COLLECTIONS_PATH/ansible_collections/$CI_PROJECT_NAMESPACE/postgresql
   XDG_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
   PIP_CACHE_DIR: "$XDG_CACHE_DIR/pip"
-  PY_COLORS: '1'
-  ANSIBLE_FORCE_COLOR: '1'
+  PY_COLORS: "1"
+  ANSIBLE_FORCE_COLOR: "1"
+  PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/"
 
 stages:
   - lint
@@ -17,59 +18,44 @@ stages:
   - build
   - deploy
 
-lint:
-  stage: lint
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/jdubz/ci-python:3.10
-  cache:
-    paths:
-      - .cache/pip/
-  before_script:
-    - python -m pip install ansible-lint
-  script:
-    - ansible-lint
-  only:
-    refs:
-      - merge_requests
-      - main
-
 .ansible:
-  stage: test
   cache:
     paths:
       - .cache/pip/
   parallel:
     matrix:
-      - PYTHON_VERSION: '3.8'
+      - PYTHON_VERSION: "3.8"
         ANSIBLE_VERSION:
-          - 'stable-2.13'
-      - PYTHON_VERSION: '3.9'
+          - "stable-2.13"
+      - PYTHON_VERSION: "3.9"
         ANSIBLE_VERSION:
-          - 'stable-2.13'
-          - 'stable-2.14'
-          - 'stable-2.15'
-      - PYTHON_VERSION: '3.10'
+          - "stable-2.13"
+          - "stable-2.14"
+          - "stable-2.15"
+      - PYTHON_VERSION: "3.10"
         ANSIBLE_VERSION:
-          - 'stable-2.13'
-          - 'stable-2.14'
-          - 'stable-2.15'
-          - 'stable-2.16'
-          - 'devel'
-          - 'milestone'
-      - PYTHON_VERSION: '3.11'
+          - "stable-2.13"
+          - "stable-2.14"
+          - "stable-2.15"
+          - "stable-2.16"
+          - "devel"
+          - "milestone"
+      - PYTHON_VERSION: "3.11"
         ANSIBLE_VERSION:
-          - 'stable-2.14'
-          - 'stable-2.15'
-          - 'stable-2.16'
-          - 'devel'
-          - 'milestone'
-      - PYTHON_VERSION: '3.12'
+          - "stable-2.14"
+          - "stable-2.15"
+          - "stable-2.16"
+          - "devel"
+          - "milestone"
+      - PYTHON_VERSION: "3.12"
         ANSIBLE_VERSION:
-          - 'stable-2.16'
-          - 'devel'
-          - 'milestone'
+          - "stable-2.16"
+          - "devel"
+          - "milestone"
 
 sanity:
   extends: .ansible
+  stage: lint
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/jdubz/ci-python:${PYTHON_VERSION}
   before_script:
     - echo -e "[global]\ncache-dir = $PIP_CACHE_DIR" > /etc/pip.conf
@@ -85,8 +71,9 @@ sanity:
       - merge_requests
       - main
 
-integration:
+molecule:
   extends: .ansible
+  stage: test
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/jdubz/ci-python:${PYTHON_VERSION}-docker
   services:
     - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:24.0.7-dind
@@ -114,12 +101,34 @@ build:
     - python -m pip install ansible-core
   script:
     - ansible-galaxy collection build
+    - sha256sum "${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz" > "${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz.sha256sum"
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+        --upload-file ${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz \
+        ${PACKAGE_REGISTRY_URL}/${CI_PROJECT_NAMESPACE}-postgresql/${CI_COMMIT_TAG}/${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+        --upload-file ${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz.sha256sum \
+        ${PACKAGE_REGISTRY_URL}/${CI_PROJECT_NAMESPACE}-postgresql/${CI_COMMIT_TAG}/${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz.sha256sum
   artifacts:
     paths:
       - "${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_REF_NAME}.tar.gz"
   only:
     refs:
       - tags
+
+release:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - |
+      release-cli create --name "Release $CI_COMMIT_TAG" \
+        --description "See ${CI_PROJECT_URL}/-/blob/${CI_COMMIT_TAG}/CHANGELOG.md for more information." \
+        --tag-name $CI_COMMIT_TAG \
+        --assets-link "{\"name\":\"${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz\",\"url\":\"${PACKAGE_REGISTRY_URL}/${CI_PROJECT_NAMESPACE}-postgresql/${CI_COMMIT_TAG}/${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz\"}" \
+        --assets-link "{\"name\":\"${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz.sha256sum\",\"url\":\"${PACKAGE_REGISTRY_URL}/${CI_PROJECT_NAMESPACE}-postgresql/${CI_COMMIT_TAG}/${CI_PROJECT_NAMESPACE}-postgresql-${CI_COMMIT_TAG}.tar.gz.sha256sum\"}" \
 
 deploy:
   stage: deploy
