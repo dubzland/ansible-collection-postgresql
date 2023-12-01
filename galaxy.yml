@@ -1,0 +1,41 @@
+---
+namespace: dubzland
+name: postgresql
+# TODO: Bump to 1.0 when modules complete
+version: "0.0.1" # noqa: galaxy[version-incorrect]
+readme: README.md
+authors:
+  - Josh Williams <jdubz@dubzland.com>
+description: Installs and configures the PostgreSQL database server and client.
+license:
+  - MIT
+tags:
+  - linux
+  - debian
+  - ubuntu
+  - postgresql
+  - database
+
+dependencies:
+  community.general: "*"
+
+repository: https://git.dubzland.com/dubzland/ansible-collection-postgresql
+
+# The URL to any online docs
+documentation: |-
+  https://docs.dubzland.io/ansible-collections/collections/dubzland/postgresql/
+
+# The URL to the homepage of the collection/project
+homepage: https://git.dubzland.com/dubzland/ansible-collection-postgresql
+
+# The URL to the collection issue tracker
+issues: https://git.dubzland.com/dubzland/ansible-collection-postgresql/-/issues
+build_ignore:
+  - .ansible-lint
+  - .cache
+  - .gitignore
+  - .gitlab-ci.yml
+  - .venv
+  - .yamllint
+  - requirements*.txt
+  - extensions

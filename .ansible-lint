@@ -1,5 +1,5 @@
 ---
 exclude_paths:
-  - .deploy/
-  - .tox/
   - .venv/
+  - roles/**/argument_specs.yml
+  - tests/output/
