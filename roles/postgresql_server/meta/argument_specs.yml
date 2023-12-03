@@ -58,6 +58,7 @@ argument_specs:
               - ldap
               - radius
               - cert
+        description: Host based authentication entries to add to pg_hba.conf.
       postgresql_server_port:
         type: int
         required: true
