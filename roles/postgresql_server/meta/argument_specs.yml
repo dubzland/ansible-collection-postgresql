@@ -2,6 +2,9 @@
 argument_specs:
   main:
     short_description: The main entrypoint for postgresql.postgresql_server
+    description:
+      - Installs the PostgreSQL server packages.
+      - Adds required PostgreSQL configuration.
     options:
       postgresql_server_configuration_dir:
         type: path
@@ -63,19 +66,17 @@ argument_specs:
         type: list
         elements: str
         required: false
-        default: 'localhost'
+        default: "localhost"
         description: IP addresses the PostgreSQL server should bind to
       postgresql_server_max_connections:
         type: int
         required: true
-        description:
-          Maximum number of connections the PostgreSQL server should allow
+        description: Maximum number of connections the PostgreSQL server should allow
       postgresql_server_unix_socket_directories:
         type: list
         elements: path
         required: true
-        description:
-          Sets the directories where Unix-domain sockets will be created
+        description: Sets the directories where Unix-domain sockets will be created
       postgresql_server_ssl:
         type: bool
         required: true
@@ -120,8 +121,7 @@ argument_specs:
       postgresql_server_cluster_name:
         type: str
         required: true
-        description:
-          Sets the name of the cluster, which is included in the process title
+        description: Sets the name of the cluster, which is included in the process title
       postgresql_server_datestyle:
         type: str
         required: true
@@ -129,8 +129,7 @@ argument_specs:
       postgresql_server_timezone:
         type: str
         required: true
-        description:
-          Sets the time zone for displaying and interpreting time stamps
+        description: Sets the time zone for displaying and interpreting time stamps
       postgresql_server_lc_messages:
         type: str
         required: true
