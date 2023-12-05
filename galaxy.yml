@@ -1,8 +1,8 @@
 ---
 namespace: dubzland
 name: postgresql
-# TODO: Bump to 1.0 when modules complete
-version: "0.0.1" # noqa: galaxy[version-incorrect]
+# TODO: Bump to 1.0 when client complete
+version: "0.0.2" # noqa: galaxy[version-incorrect]
 readme: README.md
 authors:
   - Josh Williams <jdubz@dubzland.com>

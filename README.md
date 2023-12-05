@@ -24,10 +24,10 @@ Also tested against the current development version of `ansible-core`.
 
 ### Roles
 
-| Name                                                     | Description                                      |
-| -------------------------------------------------------- | ------------------------------------------------ |
-| [dubzland.postgresql.postgresql_common]postgresql_common | Common tasks required for both client and server |
-| [dubzland.postgresql.postgresql_server]postgresql_server | Installs and configures the PostgreSQL server    |
+| Name                                                       | Description                                      |
+| ---------------------------------------------------------- | ------------------------------------------------ |
+| [dubzland.postgresql.postgresql_common][postgresql_common] | Common tasks required for both client and server |
+| [dubzland.postgresql.postgresql_server][postgresql_server] | Installs and configures the PostgreSQL server    |
 
 ## Licensing
 
