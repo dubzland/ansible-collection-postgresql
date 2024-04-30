@@ -88,7 +88,7 @@ sanity-release:
   stage: test
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/jdubz/ci-python:${PYTHON_VERSION}-docker
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:24.0.9-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:26.1.0-dind
       alias: docker
   before_script:
     - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
