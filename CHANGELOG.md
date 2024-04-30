@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Update CI process to use `ci-templates` (#1)
 - Updated minimum supported ansible version to 2.14 (#4)
 
 ## [0.0.2] - 2023-12-05
