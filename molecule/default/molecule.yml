@@ -5,7 +5,7 @@ driver:
   name: docker
 platforms:
   - name: "molecule-postgresql-bookworm"
-    image: "${REGISTRY_PROXY_URL}jdubz/ci-systemd:1.0-bookworm"
+    image: "${REGISTRY_PROXY_URL}jdubz/ci-systemd:1.1-bookworm"
     privileged: true
     pre_build_image: true
     override_command: false
@@ -13,7 +13,7 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - name: "molecule-postgresql-bullseye"
-    image: "${REGISTRY_PROXY_URL}jdubz/ci-systemd:1.0-bullseye"
+    image: "${REGISTRY_PROXY_URL}jdubz/ci-systemd:1.1-bullseye"
     privileged: true
     pre_build_image: true
     override_command: false
@@ -21,7 +21,7 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - name: "molecule-postgresql-jammy"
-    image: "${REGISTRY_PROXY_URL}jdubz/ci-systemd:1.0-jammy"
+    image: "${REGISTRY_PROXY_URL}jdubz/ci-systemd:1.1-jammy"
     privileged: true
     pre_build_image: true
     override_command: false
@@ -29,7 +29,7 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - name: "molecule-postgresql-focal"
-    image: "${REGISTRY_PROXY_URL}jdubz/ci-systemd:1.0-focal"
+    image: "${REGISTRY_PROXY_URL}jdubz/ci-systemd:1.1-focal"
     privileged: true
     pre_build_image: true
     override_command: false

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Update molecule image to `ci-systemd` 1.1 (#5)
 - Update CI process to use `ci-templates` (#1)
 - Updated minimum supported ansible version to 2.14 (#4)
 
