@@ -19,17 +19,18 @@ tags:
 dependencies:
   community.general: "*"
 
-repository: https://git.dubzland.com/dubzland/ansible-collection-postgresql
+repository: https://git.dubzland.com/dubzland/ansible-collections/postgresql
 
 # The URL to any online docs
 documentation: |-
   https://docs.dubzland.io/ansible-collections/collections/dubzland/postgresql/
 
 # The URL to the homepage of the collection/project
-homepage: https://git.dubzland.com/dubzland/ansible-collection-postgresql
+homepage: https://git.dubzland.com/dubzland/ansible-collections/postgresql
 
 # The URL to the collection issue tracker
-issues: https://git.dubzland.com/dubzland/ansible-collection-postgresql/-/issues
+issues: |-
+  https://git.dubzland.com/dubzland/ansible-collections/postgresql/-/issues
 build_ignore:
   - .ansible-lint
   - .cache
