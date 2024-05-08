@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Configuration configuration and data root directories (#10)
+
 ### Changed
 
 - Allow molecule tests to use the matrix provided by Gitlab CI (#6)

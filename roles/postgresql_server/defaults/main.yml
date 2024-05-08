@@ -5,6 +5,9 @@ postgresql_server_include_default_hba_entries: true
 
 postgresql_server_hba_entries: []
 
+postgresql_server_root_configuration_dir: /etc/postgresql
+postgresql_server_root_data_dir: /var/lib/postgresql
+
 postgresql_server_port: 5432
 postgresql_server_max_connections: 100
 postgresql_server_unix_socket_directories:
