@@ -1,10 +1,10 @@
 ---
 postgresql_server_configuration_dir:
-  "/etc/postgresql/\
+  "{{ postgresql_server_root_configuration_dir }}/\
   {{ postgresql_server_version }}/\
   {{ postgresql_server_cluster_name }}"
 postgresql_server_data_dir:
-  "/var/lib/postgresql/\
+  "{{ postgresql_server_root_data_dir }}/\
   {{ postgresql_server_version }}/\
   {{ postgresql_server_cluster_name }}"
 

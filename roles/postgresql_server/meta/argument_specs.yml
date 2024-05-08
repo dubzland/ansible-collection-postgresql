@@ -59,6 +59,14 @@ argument_specs:
               - radius
               - cert
         description: Host based authentication entries to add to pg_hba.conf.
+      postgresql_server_root_configuration_dir:
+        type: path
+        default: /etc/postgresql
+        description: Root directory to contain all PostgreSQL configuration.
+      postgresql_server_root_data-dir:
+        type: path
+        default: /var/lib/postgresql
+        description: Root directory to contain all PostgreSQL data.
       postgresql_server_port:
         type: int
         required: true
