@@ -1,7 +1,12 @@
 ---
+- name: Assign the PostgreSQL package
+  ansible.builtin.set_fact:
+    _postgresql_package_name: "postgresql-{{ postgresql_server_version }}"
+  when: postgresql_server_version is defined
+
 - name: Ensure PostgreSQL is installed
   ansible.builtin.package:
-    name: postgresql
+    name: "{{ _postgresql_package_name | default('postgresql') }}"
     state: present
   register: postgresql_server_package_result
 

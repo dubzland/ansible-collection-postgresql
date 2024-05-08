@@ -1,0 +1,49 @@
+{{ ansible_managed | comment }}
+
+# - File Locations -
+data_directory = '{{ postgresql_server_data_dir }}'
+hba_file = '{{ postgresql_server_configuration_dir }}/pg_hba.conf'
+ident_file = '{{ postgresql_server_configuration_dir }}/pg_ident.conf'
+external_pid_file = '/var/run/postgresql/{{ postgresql_server_version }}-{{ postgresql_server_cluster_name }}.pid'
+
+# - Connection Settings -
+{% if postgresql_server_listen_addresses is defined and postgresql_server_listen_addresses %}
+listen_addresses = '{{ postgresql_server_listen_addresses | join(',') }}'
+{% endif %}
+port = {{ postgresql_server_port }}
+max_connections = {{ postgresql_server_max_connections }}
+unix_socket_directories = '{{ postgresql_server_unix_socket_directories | join(',') }}'
+
+# - SSL -
+ssl = {{ 'on' if postgresql_server_ssl else 'off' }}
+{% if postgresql_server_ssl %}
+ssl_cert_file = '{{ postgresql_server_ssl_cert_file }}'
+ssl_key_file = '{{ postgresql_server_ssl_key_file }}'
+{% endif %}
+
+# - Resource Usage -
+shared_buffers = {{ postgresql_server_shared_buffers }}
+dynamic_shared_memory_type = {{ postgresql_server_dynamic_shared_memory_type }}
+
+# - Checkpoints -
+max_wal_size = {{ postgresql_server_max_wal_size }}
+min_wal_size = {{ postgresql_server_min_wal_size }}
+
+# - Logging -
+log_line_prefix = '{{ postgresql_server_log_line_prefix }}'
+log_timezone = '{{ postgresql_server_log_timezone }}'
+
+# - Process Title -
+cluster_name = '{{ postgresql_server_version }}/{{ postgresql_server_cluster_name }}'
+
+# - Locale and Formatting
+datestyle = '{{ postgresql_server_datestyle }}'
+timezone = '{{ postgresql_server_timezone }}'
+lc_messages = '{{ postgresql_server_lc_messages }}'
+lc_monetary = '{{ postgresql_server_lc_monetary }}'
+lc_numeric = '{{ postgresql_server_lc_numeric }}'
+lc_time = '{{ postgresql_server_lc_time }}'
+default_text_search_config = '{{ postgresql_server_default_text_search_config }}'
+
+# - Config file includes
+include_dir = '{{ postgresql_server_include_dir }}'
