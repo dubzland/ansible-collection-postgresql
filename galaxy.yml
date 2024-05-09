@@ -7,8 +7,7 @@ readme: README.md
 authors:
   - Josh Williams <jdubz@dubzland.com>
 description: Installs and configures the PostgreSQL database server and client.
-license:
-  - MIT
+license_file: COPYING
 tags:
   - linux
   - debian
