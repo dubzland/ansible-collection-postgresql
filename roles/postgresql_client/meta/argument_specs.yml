@@ -1,0 +1,11 @@
+---
+argument_specs:
+  main:
+    short_description: The main entrypoint for postgresql.postgresql_client
+    description:
+      - Installs the PostgreSQL client packages.
+    options:
+      postgresql_client_version:
+        type: int
+        default: 16
+        description: Version of PostgreSQL to install
