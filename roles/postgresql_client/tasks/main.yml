@@ -1,0 +1,12 @@
+---
+- name: Assign the PostgreSQL package
+  ansible.builtin.set_fact:
+    _postgresql_package_name: |
+      postgresql-client-{{ postgresql_client_version }}
+  when: postgresql_client_version is defined
+
+- name: Ensure the PostgreSQL client is installed
+  ansible.builtin.package:
+    name: "{{ _postgresql_package_name | default('postgresql-client') }}"
+    state: present
+  register: postgresql_client_package_result

@@ -28,6 +28,7 @@ Also tested against the current development version of `ansible-core`.
 | Name                                                       | Description                                      |
 | ---------------------------------------------------------- | ------------------------------------------------ |
 | [dubzland.postgresql.postgresql_common][postgresql_common] | Common tasks required for both client and server |
+| [dubzland.postgresql.postgresql_client][postgresql_client] | Installs the PostgreSQL client tools             |
 | [dubzland.postgresql.postgresql_server][postgresql_server] | Installs and configures the PostgreSQL server    |
 
 ## Licensing
@@ -52,4 +53,5 @@ See [LICENSES/MIT.txt](LICENSES/MIT.txt) for the full text.
 [liberapay-receives-badge]: https://img.shields.io/liberapay/receives/jdubz?style=flat-square&logo=liberapay
 [liberapay-url]: https://liberapay.com/jdubz/donate
 [postgresql_common]: https://docs.dubzland.io/ansible-collections/collections/dubzland/postgresql/postgresql_common_role.html
+[postgresql_client]: https://docs.dubzland.io/ansible-collections/collections/dubzland/postgresql/postgresql_client_role.html
 [postgresql_server]: https://docs.dubzland.io/ansible-collections/collections/dubzland/postgresql/postgresql_server_role.html

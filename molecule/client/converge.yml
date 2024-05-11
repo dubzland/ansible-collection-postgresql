@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install PostgreSQL client
+      ansible.builtin.include_role:
+        name: dubzland.postgresql.postgresql_client
