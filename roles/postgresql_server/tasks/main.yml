@@ -10,27 +10,21 @@
     state: present
   register: postgresql_server_package_result
 
-- name: Backup the original PostgreSQL configuration files  # noqa:  no-handler
+- name: Backup the original PostgreSQL configuration file  # noqa:  no-handler
   ansible.builtin.copy:
-    src: "{{ postgresql_server_configuration_dir }}/{{ item }}"
-    dest: "{{ postgresql_server_configuration_dir }}/{{ item }}.orig"
+    src: "{{ postgresql_server_configuration_dir }}/postgresql.conf"
+    dest: "{{ postgresql_server_configuration_dir }}/postgresql.conf.orig"
     owner: root
     group: root
     mode: '0640'
     remote_src: true
-  loop:
-    - postgresql.conf
-    - pg_hba.conf
   when: postgresql_server_package_result is changed
 
 - name: Ensure PostgreSQL is configured
   ansible.builtin.template:
-    src: "etc/postgresql/{{ postgresql_server_version }}/{{ item }}.j2"
-    dest: "{{ postgresql_server_configuration_dir }}/{{ item }}"
+    src: "etc/postgresql/{{ postgresql_server_version }}/postgresql.conf.j2"
+    dest: "{{ postgresql_server_configuration_dir }}/postgresql.conf"
     owner: postgres
     group: postgres
     mode: '0644'
-  loop:
-    - postgresql.conf
-    - pg_hba.conf
   notify: Restart PostgreSQL
