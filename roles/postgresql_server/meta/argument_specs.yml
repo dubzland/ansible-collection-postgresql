@@ -18,47 +18,6 @@ argument_specs:
         type: int
         required: true
         description: Version of PostgreSQL to install
-      postgresql_server_hba_entries:
-        type: list
-        elements: dict
-        options:
-          type:
-            type: str
-            required: true
-            choices:
-              - local
-              - host
-              - hostssl
-              - hostnossl
-              - hostgssenc
-              - hostnogssenc
-          database:
-            type: str
-            required: true
-          user:
-            type: str
-            required: true
-          address:
-            type: str
-            required: false
-          auth_method:
-            type: str
-            required: true
-            choices:
-              - trust
-              - reject
-              - md5
-              - password
-              - scram-sha-256
-              - gss
-              - sspi
-              - ident
-              - peer
-              - pam
-              - ldap
-              - radius
-              - cert
-        description: Host based authentication entries to add to pg_hba.conf.
       postgresql_server_root_configuration_dir:
         type: path
         default: /etc/postgresql
