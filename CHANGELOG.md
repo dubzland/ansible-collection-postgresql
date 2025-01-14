@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update minimum ansible version to 2.16 (#17)
+
 ### Removed
 
 - No longer managing the pb_hba file (see `ansible.community.postgresql`) (#16)
