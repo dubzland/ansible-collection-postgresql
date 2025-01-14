@@ -5,7 +5,13 @@ ignore: |
   .venv/
   molecule/
 rules:
+  braces:
+    max-spaces-inside: 1
   comments:
     min-spaces-from-content: 1
+  comments-indentation: false
   line-length:
     allow-non-breakable-words: true
+  octal-values:
+    forbid-explicit-octal: true
+    forbid-implicit-octal: true
