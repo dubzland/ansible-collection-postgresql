@@ -1,44 +1,5 @@
 ---
 postgresql_server_configuration_dir:
-  "{{ postgresql_server_root_configuration_dir }}/\
-  {{ postgresql_server_version }}/\
-  {{ postgresql_server_cluster_name }}"
+  "/etc/postgresql/{{ postgresql_server_version }}/{{ postgresql_server_cluster_name }}"
 postgresql_server_data_dir:
-  "{{ postgresql_server_root_data_dir }}/\
-  {{ postgresql_server_version }}/\
-  {{ postgresql_server_cluster_name }}"
-
-# Default Authentication entries for `pg_hba.conf`.
-postgresql_server_default_hba_entries:
-  - type: local
-    database: all
-    user: postgres
-    auth_method: peer
-  - type: local
-    database: all
-    user: all
-    auth_method: peer
-  - type: host
-    database: all
-    user: all
-    address: '127.0.0.1/32'
-    auth_method: scram-sha-256
-  - type: host
-    database: all
-    user: all
-    address: '::1/128'
-    auth_method: scram-sha-256
-  - type: local
-    database: replication
-    user: all
-    auth_method: peer
-  - type: host
-    database: replication
-    user: all
-    address: '127.0.0.1/32'
-    auth_method: scram-sha-256
-  - type: host
-    database: replication
-    user: all
-    address: '::1/128'
-    auth_method: scram-sha-256
+  "/var/lib/postgresql/{{ postgresql_server_version }}/{{ postgresql_server_cluster_name }}"

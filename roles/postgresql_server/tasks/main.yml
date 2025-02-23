@@ -10,6 +10,22 @@
     state: present
   register: postgresql_server_package_result
 
+- name: Ensure the PostgreSQL configuration directory is present
+  ansible.builtin.file:
+    path: "{{ postgresql_server_configuration_dir }}"
+    owner: "{{ postgresql_server_user }}"
+    group: "{{ postgresql_server_group }}"
+    state: directory
+    mode: '0700'
+
+- name: Ensure the PostgreSQL data directory is present
+  ansible.builtin.file:
+    path: "{{ postgresql_server_data_dir }}"
+    owner: "{{ postgresql_server_user }}"
+    group: "{{ postgresql_server_group }}"
+    state: directory
+    mode: '0700'
+
 - name: Backup the original PostgreSQL configuration file  # noqa:  no-handler
   ansible.builtin.copy:
     src: "{{ postgresql_server_configuration_dir }}/postgresql.conf"
@@ -24,7 +40,35 @@
   ansible.builtin.template:
     src: "etc/postgresql/{{ postgresql_server_version }}/postgresql.conf.j2"
     dest: "{{ postgresql_server_configuration_dir }}/postgresql.conf"
-    owner: postgres
-    group: postgres
+    owner: "{{ postgresql_server_user }}"
+    group: "{{ postgresql_server_group }}"
     mode: '0644'
   notify: Restart PostgreSQL
+
+- name: Check if PostgreSQL database is initialized
+  ansible.builtin.stat:
+    path: "{{ postgresql_server_data_dir }}/PG_VERSION"
+  register: pgdata_dir_version
+
+- name: Ensure PostgreSQL database is initialized  # noqa:  no-changed-when
+  ansible.builtin.command:
+    cmd: "/usr/lib/postgresql/{{ postgresql_server_version }}/bin/initdb -D {{ postgresql_server_data_dir }}"
+  when: not pgdata_dir_version.stat.exists
+  become: true
+  become_user: "{{ postgresql_server_user }}"
+  vars:
+    ansible_ssh_pipelining: true
+
+- name: Record PostreSQL installation facts
+  dubzland.utils.set_persistent_fact:
+    component: postgresql
+    section: general
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - option: version
+      value: "{{ postgresql_server_version }}"
+    - option: configuration_dir
+      value: "{{ postgresql_server_configuration_dir }}"
+    - option: data_dir
+      value: "{{ postgresql_server_data_dir }}"

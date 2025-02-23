@@ -6,119 +6,120 @@ argument_specs:
       - Installs the PostgreSQL server packages.
       - Adds required PostgreSQL configuration.
     options:
+      postgresql_server_version:
+        type: int
+        default: 16
+        description: Version of PostgreSQL to install
       postgresql_server_configuration_dir:
         type: path
-        required: true
+        default: /etc/postgresql/16/main
         description: Directory containing PostgreSQL configuration files
       postgresql_server_data_dir:
         type: path
-        required: true
+        default: /var/lib/postgresql/16/main
         description: Directory containing PostgreSQL data files
-      postgresql_server_version:
-        type: int
-        required: true
-        description: Version of PostgreSQL to install
-      postgresql_server_root_configuration_dir:
-        type: path
-        default: /etc/postgresql
-        description: Root directory to contain all PostgreSQL configuration.
-      postgresql_server_root_data-dir:
-        type: path
-        default: /var/lib/postgresql
-        description: Root directory to contain all PostgreSQL data.
+      postgresql_server_user:
+        type: str
+        default: postgres
+        description: System user under which PostgreSQL server will run.
+      postgresql_server_group:
+        type: str
+        default: postgres
+        description: System group for the O(postgresql_server_user).
       postgresql_server_port:
         type: int
-        required: true
+        default: 5432
         description: Port number the PostgreSQL server should listen on
       postgresql_server_listen_addresses:
         type: list
         elements: str
-        required: false
-        default: "localhost"
+        default:
+          - localhost
         description: IP addresses the PostgreSQL server should bind to
       postgresql_server_max_connections:
         type: int
-        required: true
+        default: 100
         description: Maximum number of connections the PostgreSQL server should allow
       postgresql_server_unix_socket_directories:
         type: list
         elements: path
-        required: true
+        default:
+          - /var/run/postgresql
         description: Sets the directories where Unix-domain sockets will be created
       postgresql_server_ssl:
         type: bool
-        required: true
+        default: true
         description: Enable SSL connections
       postgresql_server_ssl_cert_file:
         type: path
-        required: false
+        default: /etc/ssl/certs/ssl-cert-snakeoil.pem
         description: Location of the SSL server certificate file
       postgresql_server_ssl_key_file:
         type: path
-        required: false
+        default: /etc/ssl/private/ssl-cert-snakeoil.key
         description: Location of the SSL server private key file
       postgresql_server_shared_buffers:
         type: str
-        required: true
+        default: '128MB'
         description: Sets the number of shared memory buffers used by the server
       postgresql_server_dynamic_shared_memory_type:
         type: str
-        required: true
         choices:
           - posix
           - sysv
           - windows
           - mmap
+        default: posix
         description: Selects the dynamic shared memory implementation used
       postgresql_server_max_wal_size:
         type: str
-        required: true
+        default: '1GB'
         description: Sets the WAL size that triggers a checkpoint
       postgresql_server_min_wal_size:
         type: str
-        required: true
+        default: '80MB'
         description: Sets the minimum size to shrink the WAL to
       postgresql_server_log_line_prefix:
         type: str
-        required: true
+        default: '%m [%p] %q%u%d'
         description: Controls information prefixed to each log line
       postgresql_server_log_timezone:
         type: str
-        required: true
+        default: 'Etc/UTC'
         description: Sets the time zone to use in log messages
       postgresql_server_cluster_name:
         type: str
-        required: true
+        default: main
         description: Sets the name of the cluster, which is included in the process title
       postgresql_server_datestyle:
         type: str
-        required: true
+        default: 'iso.mdy'
         description: Sets the display format for date and time values
       postgresql_server_timezone:
         type: str
-        required: true
+        default: 'Etc/UTC'
         description: Sets the time zone for displaying and interpreting time stamps
       postgresql_server_lc_messages:
         type: str
-        required: true
+        default: 'C.UTF-8'
         description: Sets the language in which messages are displayed
       postgresql_server_lc_monetary:
         type: str
-        required: true
+        default: 'C.UTF-8'
         description: Sets the locale for formatting monetary amounts
       postgresql_server_lc_numeric:
         type: str
-        required: true
+        default: 'C.UTF-8'
         description: Sets the locale for formatting numbers
       postgresql_server_lc_time:
         type: str
-        required: true
+        default: 'C.UTF-8'
         description: Sets the locale for formatting date and time values
       postgresql_server_default_text_search_config:
         type: str
-        required: true
+        default: 'pg_catalog.english'
         description: Sets default text search configuration
       postgresql_server_include_dir:
         type: str
-        required: true
+        default: 'conf.d'
         description: Directory of configuration files to include
