@@ -1,16 +1,16 @@
 ---
-- name: Assign the PostgreSQL package
+- name: Assign the PostgreSQL server package
   ansible.builtin.set_fact:
     _postgresql_package_name: "postgresql-{{ postgresql_server_version }}"
   when: postgresql_server_version is defined
 
-- name: Ensure PostgreSQL is installed
+- name: Ensure PostgreSQL server is installed
   ansible.builtin.package:
     name: "{{ _postgresql_package_name | default('postgresql') }}"
     state: present
   register: postgresql_server_package_result
 
-- name: Ensure the PostgreSQL configuration directory is present
+- name: Ensure the PostgreSQL server configuration directory is present
   ansible.builtin.file:
     path: "{{ postgresql_server_configuration_dir }}"
     owner: "{{ postgresql_server_user }}"
@@ -18,7 +18,7 @@
     state: directory
     mode: '0700'
 
-- name: Ensure the PostgreSQL data directory is present
+- name: Ensure the PostgreSQL server data directory is present
   ansible.builtin.file:
     path: "{{ postgresql_server_data_dir }}"
     owner: "{{ postgresql_server_user }}"
@@ -26,7 +26,7 @@
     state: directory
     mode: '0700'
 
-- name: Backup the original PostgreSQL configuration file  # noqa:  no-handler
+- name: Backup the original PostgreSQL server configuration file  # noqa:  no-handler
   ansible.builtin.copy:
     src: "{{ postgresql_server_configuration_dir }}/postgresql.conf"
     dest: "{{ postgresql_server_configuration_dir }}/postgresql.conf.orig"
@@ -36,7 +36,7 @@
     remote_src: true
   when: postgresql_server_package_result is changed
 
-- name: Ensure PostgreSQL is configured
+- name: Ensure PostgreSQL server is configured
   ansible.builtin.template:
     src: "etc/postgresql/{{ postgresql_server_version }}/postgresql.conf.j2"
     dest: "{{ postgresql_server_configuration_dir }}/postgresql.conf"
@@ -59,7 +59,7 @@
   vars:
     ansible_ssh_pipelining: true
 
-- name: Record PostreSQL installation facts
+- name: Record PostreSQL server installation facts
   dubzland.utils.set_persistent_fact:
     component: postgresql
     section: general
